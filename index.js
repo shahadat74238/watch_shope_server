@@ -38,6 +38,26 @@ async function run() {
       const result = await watchesCollection.insertOne(watch);
       res.send(result);
     });
+    // update watch data
+    app.put("/watches/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log('update', id);
+      const filter = { _id: new ObjectId(id) };
+      const option = { upsert: true };
+      const updatedWatch = req.body;
+      const changeWatch = {
+        $set: {
+          image: updatedWatch.image,
+          name: updatedWatch.name,
+          brand: updatedWatch.brand,
+          type: updatedWatch.type,
+          price: updatedWatch.price,
+          rating: updatedWatch.rating,
+        },
+      };
+      const result = await watchesCollection.updateOne(filter, changeWatch, option);
+      res.send(result);
+    });
     // get all the watch
     app.get("/watches", async (req, res) => {
       const query = watchesCollection.find();
@@ -45,11 +65,11 @@ async function run() {
       res.send(result);
     });
     //  get one watch
-    app.get("/watch/:id", async (req, res) => {
+    app.get("/watches/:id", async (req, res) => {
       const id = req.params.id;
       console.log(id);
       const query = { _id: new ObjectId(id) };
-      const watches = await watchesCollection.findOne(query)
+      const watches = await watchesCollection.findOne(query);
       res.send(watches);
     });
     // get brand data
