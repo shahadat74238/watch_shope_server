@@ -60,7 +60,6 @@ async function run() {
       const result = await cardCollection.deleteOne(query);
       res.send(result);
     });
-    
 
     // insert watches in mongoDB.
     app.post("/watches", async (req, res) => {
@@ -72,7 +71,7 @@ async function run() {
     // update watch data
     app.put("/watches/:id", async (req, res) => {
       const id = req.params.id;
-      console.log('update', id);
+      console.log("update", id);
       const filter = { _id: new ObjectId(id) };
       const option = { upsert: true };
       const updatedWatch = req.body;
@@ -86,7 +85,11 @@ async function run() {
           rating: updatedWatch.rating,
         },
       };
-      const result = await watchesCollection.updateOne(filter, changeWatch, option);
+      const result = await watchesCollection.updateOne(
+        filter,
+        changeWatch,
+        option
+      );
       res.send(result);
     });
     // get all the watch
@@ -115,33 +118,37 @@ async function run() {
     app.post("/brands", async (req, res) => {
       const brands = [
         {
-          image:
-            "https://media.wired.com/photos/6081f4280c9b5877078878e2/16:9/w_2399,h_1349,c_limit/business_plaintext_apple_1313768378.jpg",
-          name: "Rolex",
-        },
-        {
-          image:
-            "https://media.wired.com/photos/6081f4280c9b5877078878e2/16:9/w_2399,h_1349,c_limit/business_plaintext_apple_1313768378.jpg",
+          _id: "6530d97920d3e3e89a818b89",
+          image: "https://cdn.wallpapersafari.com/85/64/Gjov4X.jpg",
           name: "Apple",
         },
         {
+          _id: "6530d97920d3e3e89a818b88",
           image:
-            "https://media.wired.com/photos/6081f4280c9b5877078878e2/16:9/w_2399,h_1349,c_limit/business_plaintext_apple_1313768378.jpg",
-          name: "Casio",
+            "https://media2.cgtrader.com/variants/2WStVDkAdsVBMDdBy9nBSyLB/64d1262c1acde2eb3beef249c4695a8ad88c958dd79db36f763bf631017addd0/rolex%20logo%2004.png",
+          name: "Rolex",
         },
         {
+          _id: "6530d97920d3e3e89a818b8c",
           image:
-            "https://media.wired.com/photos/6081f4280c9b5877078878e2/16:9/w_2399,h_1349,c_limit/business_plaintext_apple_1313768378.jpg",
-          name: "Omega",
-        },
-        {
-          image:
-            "https://media.wired.com/photos/6081f4280c9b5877078878e2/16:9/w_2399,h_1349,c_limit/business_plaintext_apple_1313768378.jpg",
+            "https://image.shutterstock.com/image-photo/image-260nw-639811597.jpg",
           name: "Seiko",
         },
         {
+          _id: "6530d97920d3e3e89a818b8b",
           image:
-            "https://media.wired.com/photos/6081f4280c9b5877078878e2/16:9/w_2399,h_1349,c_limit/business_plaintext_apple_1313768378.jpg",
+            "https://t3.ftcdn.net/jpg/03/53/33/12/360_F_353331268_HOOCz1xwfkC9yzTRdtwgzKbSOQUZDMWL.jpg",
+          name: "Omega",
+        },
+        {
+          _id: "6530d97920d3e3e89a818b8a",
+          image:
+            "https://1000logos.net/wp-content/uploads/2017/12/Casio-symbol.jpg",
+          name: "Casio",
+        },
+        {
+          _id: "6530d97920d3e3e89a818b8d",
+          image: "https://i.ytimg.com/vi/jlGVyrvQpZg/maxresdefault.jpg",
           name: "Citizen",
         },
       ];
