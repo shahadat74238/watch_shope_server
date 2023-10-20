@@ -30,6 +30,37 @@ async function run() {
 
     const watchesCollection = client.db("watchesDB").collection("watches");
     const brandsCollection = client.db("watchesDB").collection("brands");
+    const cardCollection = client.db("watchesDB").collection("card");
+
+    // add watches Card.
+    app.post("/card", async (req, res) => {
+      const watch = req.body;
+      console.log(watch);
+      const result = await cardCollection.insertOne(watch);
+      res.send(result);
+    });
+    // get all the watch from cards collection
+    app.get("/card", async (req, res) => {
+      const query = cardCollection.find();
+      const result = await query.toArray();
+      res.send(result);
+    });
+    //  get one watch from card collection
+    app.get("/card/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const watches = await cardCollection.findOne(query);
+      res.send(watches);
+    });
+
+    // Delete watch from card collection
+    app.delete("/card/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await cardCollection.deleteOne(query);
+      res.send(result);
+    });
+    
 
     // insert watches in mongoDB.
     app.post("/watches", async (req, res) => {
