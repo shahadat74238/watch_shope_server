@@ -30,7 +30,9 @@ async function run() {
     const brandsCollection = client.db("watchesDB").collection("brands");
     const cardCollection = client.db("watchesDB").collection("card");
 
-    // add watches Card.
+
+
+ // add watches Card.
     app.post("/card", async (req, res) => {
       const watch = req.body;
       console.log(watch);
@@ -50,6 +52,16 @@ async function run() {
       const watches = await cardCollection.findOne(query);
       res.send(watches);
     });
+
+    //  get user card watch from card collection
+    app.get("/userCard/:email", async (req, res) => {
+      const email = req.params.email;
+      console.log(email);
+      const query = { email: email };
+      const watches = await cardCollection.find(query).toArray();
+      res.send(watches);
+    });
+
 
     // Delete watch from card collection
     app.delete("/card/:id", async (req, res) => {
@@ -162,8 +174,7 @@ async function run() {
     });
 
     // Send a ping to confirm a successful connection
-    // await client.db
-    ("admin").command({ ping: 1 });
+     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
